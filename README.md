@@ -15,4 +15,4 @@ A high-converting, clean, and modern medical landing page built with HTML5, SASS
 - FontAwesome Icons
 
 ## 🌐 Live Demo
-[View Live Site](https://aurahealth.netlify.app)
+[View Live Site](aurahealth.netlify.app)

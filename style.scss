@@ -1,33 +1,37 @@
 // ==========================================
-// 1. VARIABLES & RESET
+// 1. VARIABLES & SETUP
 // ==========================================
-$primary: #0e7490;        // Azul médico profundo
-$primary-hover: #155e75;
-$accent: #06b6d4;         // Cyan brillante para contrastes
-$bg-light: #f8fafc;       // Fondo clínico suave
-$text-dark: #0f172a;       // Texto legible de alto contraste
-$text-muted: #64748b;
+$primary: #0284c7;
+$primary-hover: #0369a1;
+$secondary: #0f172a;
+$accent: #38bdf8;
+$bg-light: #f8fafc;
 $white: #ffffff;
+$text-dark: #1e293b;
+$text-muted: #64748b;
+$border-color: #e2e8f0;
 
-$font-main: 'Plus Jakarta Sans', sans-serif;
-$radius: 16px;
-$shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-$shadow-lg: 0 20px 25px -5px rgba(14, 116, 144, 0.08);
+$radius-sm: 8px;
+$radius-md: 16px;
+$radius-lg: 24px;
 
-html {
-    scroll-behavior: smooth;
-}
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: $font-main;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-body {
+html, body {
     background-color: $bg-light;
     color: $text-dark;
     line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .container {
@@ -37,29 +41,25 @@ body {
 }
 
 // ==========================================
-// 2. REUTILIZABLES & BOTONES (CTA Focused)
+// 2. COMPONENTS (BUTTONS & TYPOGRAPHY)
 // ==========================================
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 28px;
-    border-radius: $radius;
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
     font-weight: 600;
-    font-size: 0.95rem;
+    border-radius: $radius-sm;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     cursor: pointer;
     border: none;
+    font-size: 1rem;
 
     &-primary {
         background-color: $primary;
         color: $white;
-        box-shadow: 0 4px 14px rgba(14, 116, 144, 0.3);
 
         &:hover {
             background-color: $primary-hover;
-            transform: translateY(-2px);
         }
     }
 
@@ -73,22 +73,29 @@ body {
         }
     }
 
-    &-block {
+    &-full {
         width: 100%;
     }
+}
+
+.sub-title {
+    color: $primary;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.875rem;
+    display: block;
+    margin-bottom: 0.5rem;
 }
 
 .section-header {
     text-align: center;
     max-width: 600px;
-    margin: 0 auto 3.5rem auto;
+    margin: 0 auto 3rem auto;
 
     h2 {
-        font-size: 2.2rem;
-        margin-bottom: 0.8rem;
-    }
-    p {
-        color: $text-muted;
+        font-size: 2.25rem;
+        color: $secondary;
     }
 }
 
@@ -96,17 +103,17 @@ body {
 // 3. HEADER & NAV
 // ==========================================
 .header {
-    background: rgba($white, 0.9);
+    background: rgba($white, 0.95);
     backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid $border-color;
 
     .nav-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 1.2rem 2rem;
+        padding: 1rem 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -120,32 +127,51 @@ body {
             align-items: center;
             gap: 8px;
 
-            i { color: $primary; }
-            span { color: $primary; }
+            i, span {
+                color: $primary;
+            }
         }
 
-        .nav-links {
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: $text-dark;
+            cursor: pointer;
+        }
+
+        .nav-menu {
             display: flex;
-            gap: 2rem;
-            list-style: none;
+            align-items: center;
+            gap: 2.5rem;
 
-            a {
-                text-decoration: none;
-                color: $text-muted;
-                font-weight: 500;
-                transition: color 0.3s;
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+                list-style: none;
 
-                &:hover { color: $primary; }
+                a {
+                    text-decoration: none;
+                    color: $text-muted;
+                    font-weight: 500;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: $primary;
+                    }
+                }
             }
         }
     }
 }
 
 // ==========================================
-// 4. HERO SECTION & BOOKING CARD
+// 4. HERO SECTION
 // ==========================================
 .hero {
     padding: 5rem 0;
+    background: linear-gradient(180deg, $white 0%, $bg-light 100%);
 
     .hero-grid {
         display: grid;
@@ -156,27 +182,28 @@ body {
 
     .hero-content {
         .badge {
-            background: rgba($accent, 0.15);
-            color: $primary;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            background: rgba($primary, 0.1);
+            color: $primary;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
             margin-bottom: 1.5rem;
         }
 
         h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
             line-height: 1.15;
+            color: $secondary;
             margin-bottom: 1.5rem;
-            letter-spacing: -1px;
+            letter-spacing: -0.02em;
         }
 
         p {
-            font-size: 1.15rem;
+            font-size: 1.125rem;
             color: $text-muted;
             margin-bottom: 2rem;
         }
@@ -186,133 +213,159 @@ body {
             gap: 1.5rem;
             margin-bottom: 2.5rem;
 
-            .highlight-item {
+            .item {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                font-weight: 600;
+                font-weight: 500;
                 color: $text-dark;
 
-                i { color: $accent; }
+                i {
+                    color: $primary;
+                }
             }
         }
 
         .trust-footer {
+            border-top: 1px solid $border-color;
+            padding-top: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
 
-            .avatar-group {
+            .avatars {
                 display: flex;
-                gap: 6px;
-                i {
-                    background: $primary;
-                    color: $white;
+                align-items: center;
+                gap: 1rem;
+
+                .avatar-group i {
+                    font-size: 1.2rem;
+                    background: #e0f2fe;
+                    color: $primary;
                     padding: 8px;
                     border-radius: 50%;
-                    font-size: 0.8rem;
+                }
+
+                .rating {
+                    .stars {
+                        color: #f59e0b;
+                        letter-spacing: 2px;
+                    }
+                    span {
+                        font-size: 0.875rem;
+                        color: $text-muted;
+                    }
                 }
             }
-
-            strong { font-size: 0.95rem; display: block; }
-            p { font-size: 0.85rem; color: $text-muted; margin: 0; }
         }
     }
 
-    // TARJETA DE CITA (CTA PRINCIPAL)
     .booking-card {
         background: $white;
         padding: 2.5rem;
-        border-radius: $radius;
+        border-radius: $radius-lg;
         box-shadow: $shadow-lg;
-        border: 1px solid #f1f5f9;
+        border: 1px solid $border-color;
 
-        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        p { font-size: 0.9rem; color: $text-muted; margin-bottom: 1.5rem; }
+        h3 {
+            font-size: 1.5rem;
+            color: $secondary;
+            margin-bottom: 0.25rem;
+        }
+
+        p {
+            color: $text-muted;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
 
         .booking-form {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1.25rem;
 
             .form-group {
                 display: flex;
                 flex-direction: column;
-                gap: 6px;
+                gap: 0.5rem;
 
                 label {
-                    font-size: 0.85rem;
+                    font-size: 0.875rem;
                     font-weight: 600;
                     color: $text-dark;
                 }
 
                 input, select {
-                    padding: 12px 16px;
-                    border: 1px solid #cbd5e1;
-                    border-radius: 10px;
-                    font-size: 0.95rem;
+                    padding: 0.75rem 1rem;
+                    border: 1px solid $border-color;
+                    border-radius: $radius-sm;
                     outline: none;
-                    transition: border-color 0.3s;
+                    transition: border-color 0.2s;
 
                     &:focus {
                         border-color: $primary;
                     }
                 }
             }
+        }
+    }
+}
 
-            .privacy-note {
-                text-align: center;
-                font-size: 0.75rem;
+// ==========================================
+// 5. SERVICES SECTION
+// ==========================================
+.services {
+    padding: 5rem 0;
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+
+        .service-card {
+            background: $white;
+            padding: 2rem;
+            border-radius: $radius-md;
+            border: 1px solid $border-color;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: $shadow-lg;
+            }
+
+            .icon-wrapper {
+                width: 50px;
+                height: 50px;
+                background: rgba($primary, 0.1);
+                border-radius: $radius-sm;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1.5rem;
+
+                i {
+                    font-size: 1.5rem;
+                    color: $primary;
+                }
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                margin-bottom: 0.75rem;
+                color: $secondary;
+            }
+
+            p {
                 color: $text-muted;
-                margin-top: 0.5rem;
+                font-size: 0.95rem;
             }
         }
     }
 }
 
 // ==========================================
-// 5. SERVICES & OTHER SECTIONS
+// 6. WHY US / TRUST SECTION
 // ==========================================
-.services, .reviews {
-    padding: 5rem 0;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-
-    .service-card {
-        background: $white;
-        padding: 2.5rem;
-        border-radius: $radius;
-        box-shadow: $shadow-sm;
-        transition: transform 0.3s;
-
-        &:hover {
-            transform: translateY(-5px);
-        }
-
-        .icon-wrapper {
-            width: 50px;
-            height: 50px;
-            background: rgba($primary, 0.1);
-            color: $primary;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        h3 { margin-bottom: 0.8rem; }
-        p { color: $text-muted; font-size: 0.95rem; }
-    }
-}
-
 .why-us {
     padding: 5rem 0;
     background: $white;
@@ -324,71 +377,138 @@ body {
         align-items: center;
     }
 
-    .trust-image-placeholder {
-        background: #e2e8f0;
-        border-radius: $radius;
-        height: 380px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-
-        .placeholder-box {
-            text-align: center;
-            color: $text-muted;
-            i { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+    .trust-text {
+        h2 {
+            font-size: 2.25rem;
+            color: $secondary;
+            margin-bottom: 1rem;
         }
 
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        p {
+            color: $text-muted;
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            .feature-item {
+                display: flex;
+                gap: 1rem;
+
+                .feature-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: #f0fdf4;
+                    color: #16a34a;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                }
+
+                h4 {
+                    color: $secondary;
+                    margin-bottom: 0.25rem;
+                }
+
+                p {
+                    font-size: 0.9rem;
+                    margin: 0;
+                }
+            }
         }
     }
 
-    .benefits-list {
-        list-style: none;
-        margin-top: 2rem;
+    .trust-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
 
-        li {
+        .stat-card {
+            background: $bg-light;
+            padding: 2rem;
+            border-radius: $radius-md;
+            text-align: center;
             display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            flex-direction: column;
 
-            i {
-                font-size: 1.2rem;
+            .number {
+                font-size: 2.5rem;
+                font-weight: 800;
                 color: $primary;
-                margin-top: 4px;
             }
 
-            strong { display: block; margin-bottom: 2px; }
-            p { color: $text-muted; font-size: 0.9rem; }
+            .label {
+                color: $text-muted;
+                font-size: 0.875rem;
+                font-weight: 500;
+            }
+
+            &.highlight {
+                background: $secondary;
+                
+                .number { color: $accent; }
+                .label { color: $white; }
+            }
         }
     }
 }
 
-.reviews-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+// ==========================================
+// 7. REVIEWS SECTION
+// ==========================================
+.reviews {
+    padding: 5rem 0;
 
-    .review-card {
-        background: $white;
-        padding: 2rem;
-        border-radius: $radius;
-        box-shadow: $shadow-sm;
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
 
-        .stars { color: #f59e0b; margin-bottom: 1rem; }
-        p { font-style: italic; color: $text-muted; margin-bottom: 1.5rem; }
-        strong { color: $text-dark; }
+        .review-card {
+            background: $white;
+            padding: 2rem;
+            border-radius: $radius-md;
+            border: 1px solid $border-color;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .stars {
+                color: #f59e0b;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: $text-dark;
+                font-style: italic;
+                margin-bottom: 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .author {
+                strong {
+                    display: block;
+                    color: $secondary;
+                }
+                span {
+                    font-size: 0.8rem;
+                    color: $text-muted;
+                }
+            }
+        }
     }
 }
 
 // ==========================================
-// 6. FOOTER
+// 8. FOOTER
 // ==========================================
 .footer {
-    background: $text-dark;
+    background: $secondary;
     color: $white;
     padding: 4rem 0 2rem 0;
 
@@ -397,9 +517,36 @@ body {
         justify-content: space-between;
         margin-bottom: 3rem;
 
-        .footer-logo { color: $white; margin-bottom: 1rem; }
-        p { color: #94a3b8; max-width: 350px; }
-        h4 { margin-bottom: 1rem; }
+        .brand-col {
+            .logo {
+                color: $white;
+                font-size: 1.5rem;
+                font-weight: 700;
+                text-decoration: none;
+                margin-bottom: 1rem;
+                display: inline-block;
+
+                i, span { color: $accent; }
+            }
+            p {
+                color: #94a3b8;
+                max-width: 300px;
+            }
+        }
+
+        .contact-col {
+            h4 {
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+            }
+            p {
+                color: #94a3b8;
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+        }
     }
 
     .footer-bottom {
@@ -407,183 +554,137 @@ body {
         border-top: 1px solid #334155;
         padding-top: 2rem;
         color: #64748b;
-        font-size: 0.85rem;
+        font-size: 0.875rem;
     }
 }
 
 // ==========================================
-// RESPONSIVE DESIGN (MEDIA QUERIES)
+// 9. RESPONSIVE DESIGN (MEDIA QUERIES)
 // ==========================================
 
-// Evitar desbordamientos en todo el sitio
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
-}
-
-// Tablet & Pantallas Medianas (Máximo 992px)
+// Tablets (Máximo 992px)
 @media (max-width: 992px) {
-  .hero-grid,
-  .trust-grid {
-    grid-template-columns: 1fr !important;
-    gap: 2.5rem;
-  }
+    .hero .hero-grid,
+    .why-us .trust-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
 
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-// Dispositivos Móviles (Máximo 768px)
+// Móviles (Máximo 768px)
 @media (max-width: 768px) {
-  .container {
-    padding: 0 1.25rem;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  // 1. CORRECCIÓN DEL HEADER Y BOTÓN FLOTANTE
-  header, .header, nav {
-    width: 100%;
-    
-    .nav-container {
-      flex-direction: column !important;
-      align-items: center;
-      padding: 1rem 0.5rem;
-      width: 100%;
-      box-sizing: border-box;
-
-      .logo {
-        margin-bottom: 0.5rem;
-      }
-
-      .nav-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-        margin: 0.5rem 0;
-        font-size: 0.85rem;
-        width: 100%;
-      }
-
-      // Desactivar posiciones flotantes o absolutas
-      .btn-nav, 
-      button, 
-      a[class*="btn"] {
-        position: static !important;
-        width: 100%;
-        max-width: 280px;
-        margin: 0.5rem auto 0 auto;
-        text-align: center;
-      }
+    .container {
+        padding: 0 1.5rem;
     }
-  }
 
-  // 2. HERO SECTION
-  .hero {
-    padding: 2rem 0;
+    .header .nav-container {
+        padding: 1rem 1.5rem;
 
-    .hero-content {
-      text-align: center;
+        .menu-toggle {
+            display: block;
+        }
 
-      .badge {
-        display: inline-flex;
-        justify-content: center;
-        margin: 0 auto 1rem auto;
-      }
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: $white;
+            flex-direction: column;
+            padding: 1.5rem;
+            gap: 1.5rem;
+            border-bottom: 1px solid $border-color;
+            box-shadow: $shadow-lg;
 
-      h1 {
-        font-size: 2rem !important;
-        line-height: 1.25;
-      }
+            &.active {
+                display: flex;
+            }
 
-      p {
-        font-size: 0.95rem;
-      }
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.25rem;
+                width: 100%;
+            }
 
-      .hero-highlights {
+            .btn-nav {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+    .hero {
+        padding: 3rem 0;
+
+        .hero-content {
+            text-align: center;
+
+            .badge {
+                margin: 0 auto 1rem auto;
+            }
+
+            h1 {
+                font-size: 2.1rem;
+                line-height: 1.2;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .hero-highlights {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+
+            .trust-footer {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        .booking-card {
+            padding: 1.5rem;
+        }
+    }
+
+    .services-grid,
+    .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .services, .why-us, .reviews {
+        padding: 3rem 0;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 1.75rem;
+        }
+    }
+
+    .footer .footer-content {
         flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .trust-footer {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        gap: 2rem;
         text-align: center;
-      }
+
+        .brand-col p {
+            max-width: 100%;
+        }
+
+        .contact-col p {
+            justify-content: center;
+        }
     }
-
-    .booking-card {
-      width: 100%;
-      padding: 1.25rem;
-      box-sizing: border-box;
-
-      h3 {
-        font-size: 1.25rem;
-      }
-
-      input, select, button {
-        width: 100%;
-        box-sizing: border-box;
-      }
-    }
-  }
-
-  // 3. SECCIONES Y GRIDS A 1 COLUMNA
-  .services-grid,
-  .reviews-grid,
-  .trust-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem;
-  }
-
-  .services, 
-  .why-us, 
-  .reviews {
-    padding: 2.5rem 0;
-  }
-
-  .section-header {
-    margin-bottom: 1.75rem;
-    text-align: center;
-
-    h2 {
-      font-size: 1.6rem !important;
-    }
-  }
-
-  // 4. IMÁGENES Y ELEMENTOS MULTIMEDIA
-  .why-us {
-    .trust-image-placeholder,
-    img {
-      width: 100%;
-      height: auto;
-      max-height: 250px;
-      object-fit: cover;
-    }
-  }
-
-  // 5. FOOTER
-  footer, .footer {
-    padding: 2.5rem 0 1.5rem 0;
-
-    .footer-content {
-      flex-direction: column;
-      gap: 1.75rem;
-      text-align: center;
-
-      p {
-        max-width: 100%;
-      }
-    }
-  }
-
-  // Regla general para evitar imágenes rotas/gigantes
-  img, svg {
-    max-width: 100%;
-    height: auto;
-  }
 }

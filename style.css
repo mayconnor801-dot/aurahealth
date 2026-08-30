@@ -385,4 +385,48 @@ body {
   font-size: 0.85rem;
 }
 
+@media (max-width: 992px) {
+  .hero .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .why-us .trust-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  .header .nav-container, nav .nav-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    width: 100%;
+  }
+  .header .nav-container .nav-links, nav .nav-container .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin: 0.8rem 0;
+    font-size: 0.85rem;
+  }
+  .header .nav-container .btn-nav,
+  .header .nav-container button,
+  .header .nav-container a.btn, nav .nav-container .btn-nav,
+  nav .nav-container button,
+  nav .nav-container a.btn {
+    position: static;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */
